@@ -1,9 +1,16 @@
 const Usuario = require('../models/Usuario');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config({ path: 'variables.env' });
+const { validationResult } = require('express-validator');
 
 exports.autenticarUsuario = async (req, res, next) => {
 
-  //TODO Revisar si hay errores
+  // Mostrar mensajes de error de express-validator
+  const errores = validationResult(req);
+  if (!errores.isEmpty()) {
+    return res.status(400).json({ errores: errores.array() })
+  }
 
   // Buscar el password para ver si esta resistrado
   const { email, password } = req.body;
@@ -14,20 +21,41 @@ exports.autenticarUsuario = async (req, res, next) => {
     return next();
   }
 
-  //TODO Verificar el password u autenticar el usuario
+  // Verificar el password u autenticar el usuario
   if (bcrypt.compareSync(password, usuario.password)) {
 
     // Crear JWT
-
+    const token = jwt.sign({
+      id: usuario._id,
+      nombre: usuario.nombre,
+      email: usuario.email
+    }, process.env.SECRETA, {
+      expiresIn: '8h'
+    });
+    res.json(token);
 
   } else {
     res.status(401).json({ msg: 'Password Incorrecto' });
     return next();
   }
-
 }
 
+exports.usuarioAutenticado = async (req, res, next) => {
+  const authHeader = req.get('Authorization');
 
-exports.usuarioAutenticado = async (req, res) => {
+  if (authHeader) {
+    // Obtener el Token
+    const token = authHeader.split(' ')[1];
 
+    // Comprobar el JWT
+    try {
+      const usuario = jwt.verify(token, process.env.SECRETA);
+      res.json({ usuario });
+
+    } catch (error) {
+      console.log('JWT No válido');
+      console.log(error);
+    }
+  }
+  return next();
 }
