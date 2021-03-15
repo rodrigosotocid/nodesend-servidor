@@ -1,6 +1,6 @@
 # Proyecto NodeSend
 
-_Acá va un párrafo que describa lo que es el proyecto_
+_NodeSend es una aplicación en la cual el usuario se puede autenticar, puede subir archivos y este le genera una URL la cual podrá configurar el tiempo o la cantidad de veces que se pueda acceder a esa URL y así compartir el o los archivos subidos._
 
 ## Comenzando 🚀
 
