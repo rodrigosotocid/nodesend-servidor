@@ -35,9 +35,16 @@ hasta finalizar
 
 _Finaliza con un ejemplo de cómo obtener datos del sistema o como usarlos para una pequeña demo_
 
-## Ejecutando las pruebas ⚙️
+## Endpoints ⚙️
 
-_Explica como ejecutar las pruebas automatizadas para este sistema_
+_Los principales Endpoints de la API_
+
+```
+POST: http://localhost:4000/api/usuarios
+```
+```
+POST: http://localhost:4000/api/auth
+```
 
 ### Analice las pruebas end-to-end 🔩
 
