@@ -32,7 +32,7 @@ exports.autenticarUsuario = async (req, res, next) => {
     }, process.env.SECRETA, {
       expiresIn: '8h'
     });
-    res.json(token);
+    res.json({ token });
 
   } else {
     res.status(401).json({ msg: 'Password Incorrecto' });
