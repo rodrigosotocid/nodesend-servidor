@@ -22,6 +22,9 @@ const port = process.env.PORT || 4000;
 // Habilitar leer los valores de un body
 app.use(express.json());
 
+// Habilitar carpeta pública
+app.use(express.static('uploads'));
+
 // Rutas de la App
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/auth', require('./routes/auth'));
